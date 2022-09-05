@@ -2,6 +2,7 @@
 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
 	"recommendations": [
 		"Angular.ng-template",
+		"bradlc.vscode-tailwindcss",
 		"dbaeumer.vscode-eslint",
 		"SonarSource.sonarlint-vscode",
 		"EditorConfig.EditorConfig"
