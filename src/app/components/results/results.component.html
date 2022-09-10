@@ -32,6 +32,7 @@
 				<thead>
 					<tr>
 						<th scope="col">Name</th>
+						<th scope="col">Bib Number</th>
 						<th scope="col">Overall</th>
 						<th scope="col">Gender</th>
 						<th scope="col">Age Group</th>
@@ -42,6 +43,7 @@
 				<tbody>
 					<tr *ngFor="let result of results$ | async">
 						<td>{{ result.participant.person.name }}</td>
+						<td>{{ result.participant.bibNumber }}</td>
 						<td>{{ result.placeOverall }}</td>
 						<td>{{ result.placeGender }}</td>
 						<td>{{ result.placeAgeGroup }}</td>
