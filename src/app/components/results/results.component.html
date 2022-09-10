@@ -1,50 +1,80 @@
-<p>Results</p>
+<div class="row mb-3">
+	<div class="col">
+		<label for="eventSelect" class="form-label">Event</label>
+		<select id="eventSelect" class="form-select" (change)="eventSelect($event)" aria-label="">
+			<option selected="">Select...</option>
+			<option *ngFor="let event of events" value="{{ event.id }}">{{ event.name }}</option>
+		</select>
+	</div>
 
-<label for="eventSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Event</label>
-<select
-	id="eventSelect"
-	class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-	(change)="eventSelect($event)">
-	<option selected="">Select...</option>
-	<option *ngFor="let event of events" value="{{ event.id }}">{{ event.name }}</option>
-</select>
-
-<label for="eventDetailSelect" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Event Detail</label>
-<select
-	id="eventDetailSelect"
-	class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-	(change)="eventDetailSelect($event)">
-	<option selected="">Select...</option>
-	<option *ngFor="let eventDetail of eventDetails" value="{{ eventDetail.id }}">{{ eventDetail.eventType.name }}</option>
-</select>
-
-<div class="flex flex-col">
-	<div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-		<div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-			<div class="overflow-hidden">
-				<table class="min-w-full">
-					<thead class="border-b">
-						<tr>
-							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Name</th>
-							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Overall</th>
-							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Gender</th>
-							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Age Group</th>
-							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Distance</th>
-							<th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Time</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let result of results" class="border-b">
-							<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ result.participant.person.name }}</td>
-							<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ result.placeOverall }}</td>
-							<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ result.placeGender }}</td>
-							<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ result.placeAgeGroup }}</td>
-							<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ result.distanceTotal }}</td>
-							<td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{{ getDurationString(result.timeTotalSeconds) }}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+	<div class="col">
+		<label for="eventDetailSelect" class="form-label">Event Detail</label>
+		<select id="eventDetailSelect" class="form-select" (change)="eventDetailSelect($event)" aria-label="">
+			<option selected="">Select...</option>
+			<option *ngFor="let eventDetail of eventDetails" value="{{ eventDetail.id }}">{{ eventDetail.eventType.name }}</option>
+		</select>
 	</div>
 </div>
+
+<ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs">
+	<li [ngbNavItem]="1">
+		<a ngbNavLink>Results</a>
+		<ng-template ngbNavContent>
+			<form>
+				<div class="mb-3 row">
+					<label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Search:</label>
+					<div class="col-xs-3 col-sm-auto">
+						<input id="table-filtering-search" class="form-control" type="text" [formControl]="filter">
+					</div>
+				</div>
+			</form>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">Overall</th>
+						<th scope="col">Gender</th>
+						<th scope="col">Age Group</th>
+						<th scope="col">Distance</th>
+						<th scope="col">Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let result of results$ | async">
+						<td>{{ result.participant.person.name }}</td>
+						<td>{{ result.placeOverall }}</td>
+						<td>{{ result.placeGender }}</td>
+						<td>{{ result.placeAgeGroup }}</td>
+						<td>{{ result.distanceTotal }}</td>
+						<td>{{ getDurationString(result.timeTotalSeconds) }}</td>
+					</tr>
+				</tbody>
+			  </table>
+		</ng-template>
+	</li>
+	<li [ngbNavItem]="2">
+		<a ngbNavLink>Participants</a>
+		<ng-template ngbNavContent>
+		<p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko
+			farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts
+			ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar
+			helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson
+			8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester
+			stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
+		</ng-template>
+	</li>
+	<li [ngbNavItem]="3">
+		<a ngbNavLink>Stats</a>
+		<ng-template ngbNavContent>
+		<p>Sed commodo, leo at suscipit dictum, quam est porttitor sapien, eget sodales nibh elit id diam. Nulla facilisi.
+			Donec egestas ligula vitae odio interdum aliquet. Duis lectus turpis, luctus eget tincidunt eu, congue et odio.
+			Duis pharetra et nisl at faucibus. Quisque luctus pulvinar arcu, et molestie lectus ultrices et. Sed diam urna,
+			egestas ut ipsum vel, volutpat volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus nisl enim, nec
+			tristique ipsum euismod facilisis. Morbi ut bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
+			magnis dis parturient montes, nascetur ridiculus mus. Mauris aliquet odio ac lorem aliquet ultricies in eget
+			neque. Phasellus nec tortor vel tellus pulvinar feugiat.</p>
+		</ng-template>
+	</li>
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
