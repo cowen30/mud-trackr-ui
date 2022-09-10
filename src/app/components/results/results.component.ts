@@ -1,13 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import Chart from 'chart.js/auto';
 import { Duration } from 'luxon';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { EventDetail } from 'src/app/models/event-detail.model';
 import { Event as CustomEvent } from 'src/app/models/event.model';
+import { ResultStats } from 'src/app/models/result-stats.model';
 import { Result } from 'src/app/models/result.model';
 import { EventDetailsService } from 'src/app/services/event-details/event-details.service';
 import { EventsService } from 'src/app/services/events/events.service';
 import { ResultsService } from 'src/app/services/results/results.service';
+
+const DEFAULT_GENDER_LABELS: string[] = [
+	'Male',
+	'Female',
+	'Other'
+]
+
+const DEFAULT_GENDER_COLORS: string[] = [
+	'rgb(54, 162, 235)',
+	'rgb(255, 99, 132)',
+	'rgb(255, 205, 86)'
+];
 
 @Component({
 	selector: 'app-results',
@@ -16,11 +30,18 @@ import { ResultsService } from 'src/app/services/results/results.service';
 })
 export class ResultsComponent implements OnInit {
 
+	@ViewChild('genderDistributionChart') private genderDistributionChartRef!: ElementRef;
+	genderDistributionChart!: Chart;
+
 	activeTab = 1;
 
 	events!: CustomEvent[];
 	eventDetails!: EventDetail[];
 	results!: Result[];
+
+	genderDistributionLabels: string[] = [];
+	genderDistributionData: number[] = [];
+	genderDistributionBackgroundColors: string[] = [];
 
 	results$!: Observable<Result[]>;
 	filter = new FormControl('', { nonNullable: true });
@@ -33,6 +54,38 @@ export class ResultsComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getEvents();
+	}
+
+	displayStats() {
+		this.generateChart();
+	}
+
+	generateChart(): void {
+		if (this.genderDistributionData.length > 0) {
+			this.genderDistributionChart = new Chart(this.genderDistributionChartRef.nativeElement, {
+				type: 'pie',
+				data: {
+					labels: this.genderDistributionLabels,
+					datasets: [{
+						label: 'Gender Distribution',
+						data: this.genderDistributionData,
+						backgroundColor: this.genderDistributionBackgroundColors,
+						hoverBackgroundColor: this.genderDistributionBackgroundColors,
+						hoverBorderColor: this.genderDistributionBackgroundColors,
+						hoverOffset: 4
+					}]
+				},
+				options: {
+					responsive: true,
+					plugins: {
+						legend: {
+							display: true,
+							position: 'top',
+						}
+					}
+				}
+			});
+		}
 	}
 
 	getEvents(): Subscription {
@@ -73,6 +126,28 @@ export class ResultsComponent implements OnInit {
 		}, 5000);
 	}
 
+	getStats(eventDetailId: number) {
+		const statsSubscription = this.resultsService.getStats(eventDetailId).subscribe((response: ResultStats) => {
+			this.genderDistributionLabels = DEFAULT_GENDER_LABELS.filter((_, index) => {
+				return Object.values(response.gender)[index] > 0
+			});
+			this.genderDistributionData = Object.values(response.gender).filter(gender => {
+				return gender > 0;
+			});
+			this.genderDistributionBackgroundColors = DEFAULT_GENDER_COLORS.filter((_, index) => {
+				return Object.values(response.gender)[index] > 0
+			});
+
+			if (this.activeTab === 3) {
+				this.generateChart();
+			}
+		});
+
+		setTimeout(() => {
+			statsSubscription.unsubscribe();
+		}, 5000);
+	}
+
 	eventSelect(eventTrigger: Event) {
 		const selectedEventId: number = parseInt((<HTMLSelectElement> eventTrigger.target).value);
 		if (!Number.isNaN(selectedEventId)) {
@@ -84,6 +159,7 @@ export class ResultsComponent implements OnInit {
 		const selectedEventDetailId: number = parseInt((<HTMLSelectElement> eventTrigger.target).value);
 		if (!Number.isNaN(selectedEventDetailId)) {
 			this.getResults(selectedEventDetailId);
+			this.getStats(selectedEventDetailId);
 		}
 	}
 
