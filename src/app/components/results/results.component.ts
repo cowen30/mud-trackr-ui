@@ -1,8 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+
 import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Duration } from 'luxon';
 import { map, Observable, startWith, Subscription } from 'rxjs';
+
 import { EventDetail } from 'src/app/models/event-detail.model';
 import { Event as CustomEvent } from 'src/app/models/event.model';
 import { ResultStats } from 'src/app/models/result-stats.model';
@@ -75,12 +78,39 @@ export class ResultsComponent implements OnInit {
 						hoverOffset: 4
 					}]
 				},
+				plugins: [
+					ChartDataLabels
+				],
 				options: {
 					responsive: true,
 					plugins: {
+						title: {
+							display: true,
+							text: 'Gender Distribution'
+						},
 						legend: {
 							display: true,
 							position: 'top',
+						},
+						tooltip: {
+							enabled: false
+						},
+						datalabels: {
+							formatter: (value, ctx) => {
+								let sum = 0;
+								let dataArray = ctx.dataset.data;
+								dataArray.map(data => {
+									if (!isNaN(Number(data))) {
+										sum += Number(data);
+									}
+								});
+								let percentage = (value * 100 / sum) + "%";
+								return percentage;
+							},
+							color: '#FFFFFF',
+							font: {
+								size: 24
+							}
 						}
 					}
 				}
@@ -139,7 +169,7 @@ export class ResultsComponent implements OnInit {
 			});
 
 			if (this.activeTab === 3) {
-				this.generateChart();
+				this.displayStats();
 			}
 		});
 
