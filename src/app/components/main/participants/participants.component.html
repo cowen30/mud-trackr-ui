@@ -1,0 +1,20 @@
+<table class="table table-sm table-striped">
+	<thead>
+		<tr>
+			<th scope="col">Name</th>
+			<th scope="col">Bib Number</th>
+			<th scope="col">Gender</th>
+			<th scope="col">Age</th>
+			<th scope="col">Age Group</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let participant of participants">
+			<td>{{ participant.person.name }}</td>
+			<td>{{ participant.bibNumber }}</td>
+			<td>{{ participant.gender }}</td>
+			<td>{{ participant.age }}</td>
+			<td>{{ participant.ageGroup }}</td>
+		</tr>
+	</tbody>
+</table>

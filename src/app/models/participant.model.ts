@@ -5,5 +5,6 @@ export interface Participant {
 	person: Person,
 	bibNumber: string,
 	gender: string,
-	age: number
+	age: number,
+	ageGroup: string
 }
