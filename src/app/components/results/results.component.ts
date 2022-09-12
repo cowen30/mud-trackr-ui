@@ -36,6 +36,9 @@ export class ResultsComponent implements OnInit {
 	@ViewChild('genderDistributionChart') private genderDistributionChartRef!: ElementRef;
 	genderDistributionChart!: Chart;
 
+	@ViewChild('ageGroupDistributionChart') private ageGroupDistributionChartRef!: ElementRef;
+	ageGroupDistributionChart!: Chart;
+
 	activeTab = 1;
 
 	events!: CustomEvent[];
@@ -45,6 +48,10 @@ export class ResultsComponent implements OnInit {
 	genderDistributionLabels: string[] = [];
 	genderDistributionData: number[] = [];
 	genderDistributionBackgroundColors: string[] = [];
+
+	ageGroupDistributionLabels: string[] = [];
+	ageGroupDistributionDataMale: number[] = [];
+	ageGroupDistributionDataFemale: number[] = [];
 
 	results$!: Observable<Result[]>;
 	filter = new FormControl('', { nonNullable: true });
@@ -60,10 +67,11 @@ export class ResultsComponent implements OnInit {
 	}
 
 	displayStats() {
-		this.generateChart();
+		this.generateGenderDistributionChart();
+		this.generateAgeGroupDistributionChart();
 	}
 
-	generateChart(): void {
+	generateGenderDistributionChart(): void {
 		if (this.genderDistributionData.length > 0) {
 			this.genderDistributionChart = new Chart(this.genderDistributionChartRef.nativeElement, {
 				type: 'pie',
@@ -118,6 +126,42 @@ export class ResultsComponent implements OnInit {
 		}
 	}
 
+	generateAgeGroupDistributionChart(): void {
+		if (this.ageGroupDistributionLabels.length > 0) {
+			this.ageGroupDistributionChart = new Chart(this.ageGroupDistributionChartRef.nativeElement, {
+				type: 'bar',
+				data: {
+					labels: this.ageGroupDistributionLabels,
+					datasets: [
+						{
+							label: 'Males',
+							data: this.ageGroupDistributionDataMale
+						},
+						{
+							label: 'Females',
+							data: this.ageGroupDistributionDataFemale
+						}
+					]
+				},
+				options: {
+					responsive: true,
+					plugins: {
+						title: {
+							display: true,
+							text: 'Age Group Distribution'
+						},
+					},
+					indexAxis: 'y',
+					scales: {
+						x: {
+							beginAtZero: true
+						}
+					}
+				},
+			});
+		}
+	}
+
 	getEvents(): Subscription {
 		const eventsSubscription = this.eventsService.getEvents().subscribe((response: CustomEvent[]) => {
 			this.events = response;
@@ -167,6 +211,20 @@ export class ResultsComponent implements OnInit {
 			this.genderDistributionBackgroundColors = DEFAULT_GENDER_COLORS.filter((_, index) => {
 				return Object.values(response.gender)[index] > 0
 			});
+			response.ageGroup.map(ageGroup => {
+				if (!this.ageGroupDistributionLabels.includes(ageGroup.name.slice(1))) {
+					this.ageGroupDistributionLabels.push(ageGroup.name.slice(1));
+					this.ageGroupDistributionDataFemale.push(0);
+					this.ageGroupDistributionDataMale.push(0);
+				}
+				this.ageGroupDistributionLabels.sort();
+				if (ageGroup.name.charAt(0) === 'M') {
+					this.ageGroupDistributionDataMale[this.ageGroupDistributionLabels.indexOf(ageGroup.name.slice(1))] = ageGroup.count;
+				}
+				if (ageGroup.name.charAt(0) === 'F') {
+					this.ageGroupDistributionDataFemale[this.ageGroupDistributionLabels.indexOf(ageGroup.name.slice(1))] = ageGroup.count;
+				}
+			})
 
 			if (this.activeTab === 3) {
 				this.displayStats();
