@@ -112,7 +112,7 @@ export class ResultsComponent implements OnInit {
 										sum += Number(data);
 									}
 								});
-								let percentage = (value * 100 / sum) + "%";
+								let percentage = (value * 100 / sum).toFixed(0) + "%";
 								return percentage;
 							},
 							color: '#FFFFFF',
@@ -154,7 +154,10 @@ export class ResultsComponent implements OnInit {
 					indexAxis: 'y',
 					scales: {
 						x: {
-							beginAtZero: true
+							beginAtZero: true,
+							ticks: {
+								stepSize: 1
+							}
 						}
 					}
 				},
