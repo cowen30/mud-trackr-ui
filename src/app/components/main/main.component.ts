@@ -27,11 +27,11 @@ const DEFAULT_GENDER_COLORS: string[] = [
 ];
 
 @Component({
-	selector: 'app-results',
-	templateUrl: './results.component.html',
-	styleUrls: ['./results.component.scss']
+	selector: 'app-main',
+	templateUrl: './main.component.html',
+	styleUrls: ['./main.component.scss']
 })
-export class ResultsComponent implements OnInit {
+export class MainComponent implements OnInit {
 
 	@ViewChild('genderDistributionChart') private genderDistributionChartRef!: ElementRef;
 	genderDistributionChart!: Chart;
@@ -39,11 +39,16 @@ export class ResultsComponent implements OnInit {
 	@ViewChild('ageGroupDistributionChart') private ageGroupDistributionChartRef!: ElementRef;
 	ageGroupDistributionChart!: Chart;
 
-	activeTab = 1;
+	activeTab: number = 1;
 
 	events!: CustomEvent[];
 	eventDetails!: EventDetail[];
+
+	selectedEventDetailId!: number;
+
 	results!: Result[];
+	results$!: Observable<Result[]>;
+	filter = new FormControl('', { nonNullable: true });
 
 	genderDistributionLabels: string[] = [];
 	genderDistributionData: number[] = [];
@@ -52,9 +57,6 @@ export class ResultsComponent implements OnInit {
 	ageGroupDistributionLabels: string[] = [];
 	ageGroupDistributionDataMale: number[] = [];
 	ageGroupDistributionDataFemale: number[] = [];
-
-	results$!: Observable<Result[]>;
-	filter = new FormControl('', { nonNullable: true });
 
 	constructor(
 		private eventsService: EventsService,
@@ -249,6 +251,7 @@ export class ResultsComponent implements OnInit {
 	eventDetailSelect(eventTrigger: Event) {
 		const selectedEventDetailId: number = parseInt((<HTMLSelectElement> eventTrigger.target).value);
 		if (!Number.isNaN(selectedEventDetailId)) {
+			this.selectedEventDetailId = selectedEventDetailId;
 			this.getResults(selectedEventDetailId);
 			this.getStats(selectedEventDetailId);
 		}
