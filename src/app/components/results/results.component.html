@@ -1,5 +1,5 @@
 <div class="row mb-3">
-	<div class="col">
+	<div class="col-12 col-md-6">
 		<label for="eventSelect" class="form-label">Event</label>
 		<select id="eventSelect" class="form-select" (change)="eventSelect($event)" aria-label="">
 			<option selected="">Select...</option>
@@ -7,7 +7,7 @@
 		</select>
 	</div>
 
-	<div class="col">
+	<div class="col-12 col-md-6">
 		<label for="eventDetailSelect" class="form-label">Event Detail</label>
 		<select id="eventDetailSelect" class="form-select" (change)="eventDetailSelect($event)" aria-label="">
 			<option selected="">Select...</option>
@@ -69,10 +69,10 @@
 		<a ngbNavLink>Stats</a>
 		<ng-template ngbNavContent>
 			<div class="row">
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<canvas #genderDistributionChart></canvas>
 				</div>
-				<div class="col-6">
+				<div class="col-12 col-md-6">
 					<canvas #ageGroupDistributionChart></canvas>
 				</div>
 			</div>
