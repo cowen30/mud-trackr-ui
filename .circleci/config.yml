@@ -22,4 +22,4 @@ jobs:
           key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
             - "node_modules"
-      - run: npm run test
+      - run: npm run test --forceExit
