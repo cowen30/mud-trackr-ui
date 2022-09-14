@@ -14,7 +14,7 @@ export class ResultsService {
 
 	constructor(private http: HttpClient) { }
 
-	getResults(eventDetailId: number): Observable<any> {
+	getResults(eventDetailId: number): Observable<{ results: Result[] }> {
 		const params = new HttpParams().set('eventDetailId', eventDetailId);
 		return this.http.get<any>(`${this.baseUrl}/results`, { params: params });
 	}
