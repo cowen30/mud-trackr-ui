@@ -192,7 +192,7 @@ export class MainComponent implements OnInit {
 	}
 
 	getResults(eventDetailId: number) {
-		const resultSubscription = this.resultsService.getResults(eventDetailId).subscribe((response: any) => {
+		const resultSubscription = this.resultsService.getResults(eventDetailId).subscribe((response: { results: Result[] }) => {
 			this.results = response.results;
 			this.results$ = this.filter.valueChanges.pipe(
 				startWith(''),
