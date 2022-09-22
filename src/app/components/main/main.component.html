@@ -28,15 +28,15 @@
 					</div>
 				</div>
 			</form>
-			<table class="table table-sm table-striped">
+			<table class="table table-sm table-striped small">
 				<thead>
 					<tr>
 						<th scope="col">Name</th>
-						<th scope="col">Bib Number</th>
-						<th scope="col">Status</th>
+						<th scope="col" class="d-none d-lg-table-cell">Bib Number</th>
+						<th scope="col" class="d-none d-lg-table-cell">Status</th>
 						<th scope="col">Overall</th>
-						<th scope="col">Gender</th>
-						<th scope="col">Age Group</th>
+						<th scope="col" class="d-none d-md-table-cell">Gender</th>
+						<th scope="col" class="d-none d-md-table-cell">Age Group</th>
 						<th scope="col">Distance</th>
 						<th scope="col">Time</th>
 					</tr>
@@ -44,11 +44,11 @@
 				<tbody>
 					<tr *ngFor="let result of results$ | async">
 						<td>{{ result.participant.person.name }}</td>
-						<td>{{ result.participant.bibNumber }}</td>
-						<td>{{ result.status }}</td>
+						<td class="d-none d-lg-table-cell">{{ result.participant.bibNumber }}</td>
+						<td class="d-none d-lg-table-cell">{{ result.status }}</td>
 						<td>{{ result.placeOverall }}</td>
-						<td>{{ result.placeGender }}</td>
-						<td>{{ result.placeAgeGroup }}</td>
+						<td class="d-none d-md-table-cell">{{ result.placeGender }}</td>
+						<td class="d-none d-md-table-cell">{{ result.placeAgeGroup }}</td>
 						<td>{{ result.distanceTotal }}</td>
 						<td>{{ getDurationString(result.timeTotalSeconds) }}</td>
 					</tr>
