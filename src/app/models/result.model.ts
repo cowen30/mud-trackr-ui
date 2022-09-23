@@ -10,5 +10,6 @@ export interface Result {
 	participant: Participant,
 	lapsTotal: number,
 	distanceTotal: number,
+	distanceUnits: string,
 	timeTotalSeconds: number
 }

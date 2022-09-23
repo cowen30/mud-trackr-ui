@@ -52,6 +52,7 @@ describe('ResultsService', () => {
 					},
 					lapsTotal: 3,
 					distanceTotal: 10,
+					distanceUnits: 'km',
 					timeTotalSeconds: 12345
 				}
 			]
