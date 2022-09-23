@@ -23,7 +23,7 @@ describe('MainComponent', () => {
 		mockEventsService.getEvents.and.returnValue(of([]));
 
 		mockResultsService = createSpyObj('ResultsService', ['getResults', 'getStats']);
-		mockResultsService.getResults.and.returnValue(of({ results: []}));
+		mockResultsService.getResults.and.returnValue(of());
 		mockResultsService.getStats.and.returnValue(of());
 
 		mockEventDetailsService = createSpyObj('EventDetailsService', ['getEventDetailsByEventId']);

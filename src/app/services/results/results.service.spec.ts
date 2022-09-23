@@ -2,7 +2,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { ResultStatus } from 'src/app/enums/result-status.enum';
 import { ResultResponse } from 'src/app/models/result-response';
-import { Result } from 'src/app/models/result.model';
 
 import { ResultsService } from './results.service';
 
