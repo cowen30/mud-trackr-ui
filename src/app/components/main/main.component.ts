@@ -8,6 +8,7 @@ import { map, Observable, startWith, Subscription } from 'rxjs';
 
 import { EventDetail } from 'src/app/models/event-detail.model';
 import { Event as CustomEvent } from 'src/app/models/event.model';
+import { ResultResponse } from 'src/app/models/result-response';
 import { ResultStats } from 'src/app/models/result-stats.model';
 import { Result } from 'src/app/models/result.model';
 import { EventDetailsService } from 'src/app/services/event-details/event-details.service';
@@ -25,6 +26,8 @@ const DEFAULT_GENDER_COLORS: string[] = [
 	'rgb(255, 99, 132)',
 	'rgb(255, 205, 86)'
 ];
+
+const FILTER_PAG_REGEX = /\D/g;
 
 @Component({
 	selector: 'app-main',
@@ -66,6 +69,17 @@ export class MainComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getEvents();
+	}
+
+	page = 1;
+	totalResults = 0;
+
+	selectPage(page: string) {
+		this.page = parseInt(page, 10) || 1;
+	}
+
+	formatInput(input: HTMLInputElement) {
+		input.value = input.value.replace(FILTER_PAG_REGEX, '');
 	}
 
 	displayStats() {
@@ -192,8 +206,10 @@ export class MainComponent implements OnInit {
 	}
 
 	getResults(eventDetailId: number) {
-		const resultSubscription = this.resultsService.getResults(eventDetailId).subscribe((response: { results: Result[] }) => {
+		const resultSubscription = this.resultsService.getResults(eventDetailId).subscribe((response: ResultResponse) => {
 			this.results = response.results;
+			this.page = response.metadata.currentPage;
+			this.totalResults = response.metadata.total;
 			this.results$ = this.filter.valueChanges.pipe(
 				startWith(''),
 				map(text => this.search(text))

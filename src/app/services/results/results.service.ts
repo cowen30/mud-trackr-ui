@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ResultResponse } from 'src/app/models/result-response';
 import { ResultStats } from 'src/app/models/result-stats.model';
 import { environment } from 'src/environments/environment';
 import { Result } from '../../models/result.model';
@@ -14,7 +15,7 @@ export class ResultsService {
 
 	constructor(private http: HttpClient) { }
 
-	getResults(eventDetailId: number): Observable<{ results: Result[] }> {
+	getResults(eventDetailId: number): Observable<ResultResponse> {
 		const params = new HttpParams().set('eventDetailId', eventDetailId);
 		return this.http.get<any>(`${this.baseUrl}/results`, { params: params });
 	}
