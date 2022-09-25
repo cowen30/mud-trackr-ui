@@ -7,6 +7,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Duration } from 'luxon';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { DurationHelper } from 'src/app/helpers/duration.helper';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { EventDetail } from 'src/app/models/event-detail.model';
 import { Event as CustomEvent } from 'src/app/models/event.model';
@@ -69,7 +70,8 @@ export class MainComponent implements OnInit {
 		private eventsService: EventsService,
 		private resultsService: ResultsService,
 		private eventDetailsService: EventDetailsService,
-		private modalService: NgbModal
+		private modalService: NgbModal,
+		private spinner: NgxSpinnerService
 	) { }
 
 	ngOnInit(): void {
@@ -216,6 +218,8 @@ export class MainComponent implements OnInit {
 	}
 
 	getResults(eventDetailId: number) {
+		const spinnerName = this.totalResults == 0 ? 'fullSpinner' : 'innerSpinner';
+		this.spinner.show(spinnerName);
 		const resultSubscription = this.resultsService.getResults(eventDetailId, this.page).subscribe((response: ResultResponse) => {
 			this.results = response.results;
 			this.totalResults = response.metadata.total;
@@ -223,6 +227,7 @@ export class MainComponent implements OnInit {
 				startWith(''),
 				map(text => this.search(text))
 			);
+			this.spinner.hide(spinnerName);
 		});
 
 		setTimeout(() => {

@@ -28,40 +28,43 @@
 					</div>
 				</div>
 			</form>
-			<table class="table table-sm table-striped small">
-				<thead>
-					<tr class="d-none d-md-table-row">
-						<th scope="col"></th>
-						<th scope="col" class="d-none d-lg-table-cell"></th>
-						<th scope="col" class="d-none d-lg-table-cell"></th>
-						<th scope="col" colspan="3" class="text-center border-bottom">Place</th>
-						<th scope="col"></th>
-						<th scope="col"></th>
-					</tr>
-					<tr>
-						<th scope="col">Name</th>
-						<th scope="col" class="d-none d-lg-table-cell">Bib Number</th>
-						<th scope="col" class="d-none d-lg-table-cell">Status</th>
-						<th scope="col">Overall</th>
-						<th scope="col" class="d-none d-md-table-cell">Gender</th>
-						<th scope="col" class="d-none d-md-table-cell">Age Group</th>
-						<th scope="col">Distance</th>
-						<th scope="col">Time</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let result of results$ | async" (click)="openModal(result)">
-						<td>{{ result.participant.person.name }}</td>
-						<td class="d-none d-lg-table-cell">{{ result.participant.bibNumber }}</td>
-						<td class="d-none d-lg-table-cell">{{ result.status }}</td>
-						<td>{{ result.placeOverall }}</td>
-						<td class="d-none d-md-table-cell">{{ result.placeGender }}</td>
-						<td class="d-none d-md-table-cell">{{ result.placeAgeGroup }}</td>
-						<td>{{ result.distanceTotal }} {{ result.distanceUnits }}</td>
-						<td class="font-monospace">{{ durationHelper.getDurationString(result.timeTotalSeconds) }}</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="position-relative">
+				<table class="table table-sm table-striped small">
+					<thead>
+						<tr class="d-none d-md-table-row">
+							<th scope="col"></th>
+							<th scope="col" class="d-none d-lg-table-cell"></th>
+							<th scope="col" class="d-none d-lg-table-cell"></th>
+							<th scope="col" colspan="3" class="text-center border-bottom">Place</th>
+							<th scope="col"></th>
+							<th scope="col"></th>
+						</tr>
+						<tr>
+							<th scope="col">Name</th>
+							<th scope="col" class="d-none d-lg-table-cell">Bib Number</th>
+							<th scope="col" class="d-none d-lg-table-cell">Status</th>
+							<th scope="col">Overall</th>
+							<th scope="col" class="d-none d-md-table-cell">Gender</th>
+							<th scope="col" class="d-none d-md-table-cell">Age Group</th>
+							<th scope="col">Distance</th>
+							<th scope="col">Time</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let result of results$ | async" (click)="openModal(result)">
+							<td>{{ result.participant.person.name }}</td>
+							<td class="d-none d-lg-table-cell">{{ result.participant.bibNumber }}</td>
+							<td class="d-none d-lg-table-cell">{{ result.status }}</td>
+							<td>{{ result.placeOverall }}</td>
+							<td class="d-none d-md-table-cell">{{ result.placeGender }}</td>
+							<td class="d-none d-md-table-cell">{{ result.placeAgeGroup }}</td>
+							<td>{{ result.distanceTotal }} {{ result.distanceUnits }}</td>
+							<td class="font-monospace">{{ durationHelper.getDurationString(result.timeTotalSeconds) }}</td>
+						</tr>
+					</tbody>
+				</table>
+				<ngx-spinner name="innerSpinner" [fullScreen]="false"></ngx-spinner>
+			</div>
 			<div class="d-flex justify-content-center pt-3">
 				<ngb-pagination [collectionSize]="totalResults" [pageSize]="25" [(page)]="page" [boundaryLinks]="true" (pageChange)="getResults(selectedEventDetailId)">
 					<ng-template ngbPaginationPages let-page let-pages="pages">
@@ -116,3 +119,5 @@
 </ul>
 
 <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+<ngx-spinner name="fullSpinner"></ngx-spinner>
