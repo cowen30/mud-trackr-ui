@@ -58,7 +58,7 @@
 						<td class="d-none d-md-table-cell">{{ result.placeGender }}</td>
 						<td class="d-none d-md-table-cell">{{ result.placeAgeGroup }}</td>
 						<td>{{ result.distanceTotal }} {{ result.distanceUnits }}</td>
-						<td>{{ getDurationString(result.timeTotalSeconds) }}</td>
+						<td class="font-monospace">{{ durationHelper.getDurationString(result.timeTotalSeconds) }}</td>
 					</tr>
 				</tbody>
 			</table>
