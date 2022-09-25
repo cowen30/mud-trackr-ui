@@ -40,11 +40,11 @@ describe('ResultsService', () => {
 			]
 		};
 
-		resultsService.getResults(1).subscribe(results => {
+		resultsService.getResults(1, 1).subscribe(results => {
 			expect(results.results.length).toBe(1);
 			expect(results).toEqual(dummyResults);
 		});
-		const req = httpMock.expectOne(`http://localhost:3000/results?eventDetailId=1`);
+		const req = httpMock.expectOne(`http://localhost:3000/results?eventDetailId=1&page=1`);
 
 		expect(req.request.method).toBe('GET');
 		req.flush(dummyResults);
