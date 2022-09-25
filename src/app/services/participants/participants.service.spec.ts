@@ -1,7 +1,8 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Participant } from 'src/app/models/participant.model';
 
+import ParticipantBuilder from 'src/app/helpers/builders/participant.builder';
+import { ParticipantResponse } from 'src/app/models/participant-response.model';
 import { ParticipantsService } from './participants.service';
 
 describe('ParticipantsService', () => {
@@ -28,27 +29,22 @@ describe('ParticipantsService', () => {
 	});
 
 	it('should call getEvents', () => {
-		const dummyParticipants: Participant[] = [
-			{
-				id: 1,
-				person: {
-					id: 1,
-					name: 'test',
-					firstName: 'test',
-					lastName: 'test'
-				},
-				bibNumber: '123',
-				gender: 'F',
-				age: 34,
-				ageGroup: 'test'
-			}
-		];
+		const dummyParticipants: ParticipantResponse = {
+			metadata: {
+				total: 10,
+				totalPages: 1,
+				currentPage: 1
+			},
+			participants: [
+				ParticipantBuilder.buildParticipant()
+			]
+		};
 
-		participantsService.getParticipants(1).subscribe(participants => {
-			expect(participants.length).toBe(1);
-			expect(participants).toEqual(dummyParticipants);
+		participantsService.getParticipants(1, 1).subscribe(participantResponse => {
+			expect(participantResponse.participants.length).toBe(1);
+			expect(participantResponse).toEqual(dummyParticipants);
 		});
-		const req = httpMock.expectOne(`http://localhost:3000/participants?eventDetailId=1`);
+		const req = httpMock.expectOne(`http://localhost:3000/participants?eventDetailId=1&page=1`);
 
 		expect(req.request.method).toBe('GET');
 		req.flush(dummyParticipants);

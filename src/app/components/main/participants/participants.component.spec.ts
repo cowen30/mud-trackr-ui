@@ -14,7 +14,7 @@ describe('ParticipantsComponent', () => {
 
 	beforeEach(async () => {
 		mockParticipantsService = createSpyObj('ParticipantsService', ['getParticipants']);
-		mockParticipantsService.getParticipants.and.returnValue(of([]));
+		mockParticipantsService.getParticipants.and.returnValue(of());
 
 		await TestBed.configureTestingModule({
 			declarations: [

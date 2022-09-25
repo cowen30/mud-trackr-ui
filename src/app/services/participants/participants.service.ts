@@ -1,7 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs';
-import { Participant } from 'src/app/models/participant.model';
+
+import { ParticipantResponse } from 'src/app/models/participant-response.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,9 +15,11 @@ export class ParticipantsService {
 
 	constructor(private http: HttpClient) { }
 
-	getParticipants(eventDetailId: number): Observable<Participant[]> {
-		const params = new HttpParams().set('eventDetailId', eventDetailId);
-		return this.http.get<Participant[]>(`${this.baseUrl}/participants`, { params: params });
+	getParticipants(eventDetailId: number, page: number): Observable<ParticipantResponse> {
+		const params = new HttpParams()
+			.set('eventDetailId', eventDetailId)
+			.set('page', page);
+		return this.http.get<ParticipantResponse>(`${this.baseUrl}/participants`, { params: params });
 	}
 
 }
