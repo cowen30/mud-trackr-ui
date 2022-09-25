@@ -1,8 +1,8 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ResultStatus } from 'src/app/enums/result-status.enum';
-import { ResultResponse } from 'src/app/models/result-response';
 
+import ResultBuilder from 'src/app/helpers/builders/result.builder';
+import { ResultResponse } from 'src/app/models/result-response';
 import { ResultsService } from './results.service';
 
 describe('ResultsService', () => {
@@ -36,30 +36,7 @@ describe('ResultsService', () => {
 				currentPage: 1
 			},
 			results: [
-				{
-					id: 1,
-					placeOverall: 1,
-					placeGender: 1,
-					placeAgeGroup: 1,
-					status: ResultStatus.FINISHED,
-					participant: {
-						id: 1,
-						person: {
-							id: 1,
-							name: 'test',
-							firstName: 'test',
-							lastName: 'test'
-						},
-						bibNumber: '123',
-						gender: 'F',
-						age: 34,
-						ageGroup: 'test'
-					},
-					lapsTotal: 3,
-					distanceTotal: 10,
-					distanceUnits: 'km',
-					timeTotalSeconds: 12345
-				}
+				ResultBuilder.buildResult()
 			]
 		};
 

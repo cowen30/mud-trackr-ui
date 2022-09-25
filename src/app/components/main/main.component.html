@@ -50,7 +50,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let result of results$ | async">
+					<tr *ngFor="let result of results$ | async" (click)="openModal(result)">
 						<td>{{ result.participant.person.name }}</td>
 						<td class="d-none d-lg-table-cell">{{ result.participant.bibNumber }}</td>
 						<td class="d-none d-lg-table-cell">{{ result.status }}</td>

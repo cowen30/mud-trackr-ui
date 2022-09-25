@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Duration } from 'luxon';
 import { map, Observable, startWith, Subscription } from 'rxjs';
+import { DurationHelper } from 'src/app/helpers/duration.helper';
 
 import { EventDetail } from 'src/app/models/event-detail.model';
 import { Event as CustomEvent } from 'src/app/models/event.model';
@@ -14,6 +16,7 @@ import { Result } from 'src/app/models/result.model';
 import { EventDetailsService } from 'src/app/services/event-details/event-details.service';
 import { EventsService } from 'src/app/services/events/events.service';
 import { ResultsService } from 'src/app/services/results/results.service';
+import { ResultDetailsComponent } from './results/result-details/result-details.component';
 
 const DEFAULT_GENDER_LABELS: string[] = [
 	'Male',
@@ -62,9 +65,11 @@ export class MainComponent implements OnInit {
 	ageGroupDistributionDataFemale: number[] = [];
 
 	constructor(
+		public durationHelper: DurationHelper,
 		private eventsService: EventsService,
 		private resultsService: ResultsService,
-		private eventDetailsService: EventDetailsService
+		private eventDetailsService: EventDetailsService,
+		private modalService: NgbModal
 	) { }
 
 	ngOnInit(): void {
@@ -80,6 +85,11 @@ export class MainComponent implements OnInit {
 
 	formatInput(input: HTMLInputElement) {
 		input.value = input.value.replace(FILTER_PAG_REGEX, '');
+	}
+
+	openModal(result: Result) {
+		const modalRef = this.modalService.open(ResultDetailsComponent, { size: 'lg' });
+		modalRef.componentInstance.result = result;
 	}
 
 	displayStats() {
@@ -271,11 +281,6 @@ export class MainComponent implements OnInit {
 			this.getResults(selectedEventDetailId);
 			this.getStats(selectedEventDetailId);
 		}
-	}
-
-	getDurationString(seconds: number) {
-		const duration = Duration.fromMillis(seconds * 1000);
-		return duration.toFormat('hh:mm:ss');
 	}
 
 	search(text: string): Result[] {

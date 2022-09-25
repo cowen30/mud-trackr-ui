@@ -9,12 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import { ParticipantsComponent } from './components/main/participants/participants.component';
+import { ResultDetailsComponent } from './components/main/results/result-details/result-details.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		MainComponent,
-		ParticipantsComponent
+		ParticipantsComponent,
+		ResultDetailsComponent
 	],
 	imports: [
 		BrowserModule,

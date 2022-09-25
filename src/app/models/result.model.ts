@@ -1,4 +1,5 @@
 import { ResultStatus } from "../enums/result-status.enum";
+import { LapDetail } from "./lap-detail.model";
 import { Participant } from "./participant.model";
 
 export interface Result {
@@ -11,5 +12,6 @@ export interface Result {
 	lapsTotal: number,
 	distanceTotal: number,
 	distanceUnits: string,
-	timeTotalSeconds: number
+	timeTotalSeconds: number,
+	lapDetails: LapDetail[]
 }
