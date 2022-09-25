@@ -218,7 +218,6 @@ export class MainComponent implements OnInit {
 	getResults(eventDetailId: number) {
 		const resultSubscription = this.resultsService.getResults(eventDetailId, this.page).subscribe((response: ResultResponse) => {
 			this.results = response.results;
-			this.page = response.metadata.currentPage;
 			this.totalResults = response.metadata.total;
 			this.results$ = this.filter.valueChanges.pipe(
 				startWith(''),

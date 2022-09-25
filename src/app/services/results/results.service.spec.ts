@@ -40,9 +40,9 @@ describe('ResultsService', () => {
 			]
 		};
 
-		resultsService.getResults(1, 1).subscribe(results => {
-			expect(results.results.length).toBe(1);
-			expect(results).toEqual(dummyResults);
+		resultsService.getResults(1, 1).subscribe(resultResponse => {
+			expect(resultResponse.results.length).toBe(1);
+			expect(resultResponse).toEqual(dummyResults);
 		});
 		const req = httpMock.expectOne(`http://localhost:3000/results?eventDetailId=1&page=1`);
 
