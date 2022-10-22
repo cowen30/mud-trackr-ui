@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { Duration } from 'luxon';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { DurationHelper } from 'src/app/helpers/duration.helper';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -23,7 +22,7 @@ const DEFAULT_GENDER_LABELS: string[] = [
 	'Male',
 	'Female',
 	'Other'
-]
+];
 
 const DEFAULT_GENDER_COLORS: string[] = [
 	'rgb(54, 162, 235)',
@@ -135,7 +134,7 @@ export class MainComponent implements OnInit {
 							formatter: (value, ctx) => {
 								let sum = 0;
 								let dataArray = ctx.dataset.data;
-								dataArray.map(data => {
+								dataArray.forEach(data => {
 									if (!isNaN(Number(data))) {
 										sum += Number(data);
 									}
@@ -162,33 +161,62 @@ export class MainComponent implements OnInit {
 					labels: this.ageGroupDistributionLabels,
 					datasets: [
 						{
-							label: 'Males',
-							data: this.ageGroupDistributionDataMale
+							label: 'Male',
+							data: this.ageGroupDistributionDataMale,
+							backgroundColor: this.genderDistributionBackgroundColors[0],
+							hoverBackgroundColor: this.genderDistributionBackgroundColors[0],
+							hoverBorderColor: this.genderDistributionBackgroundColors[0],
 						},
 						{
-							label: 'Females',
-							data: this.ageGroupDistributionDataFemale
+							label: 'Female',
+							data: this.ageGroupDistributionDataFemale,
+							backgroundColor: this.genderDistributionBackgroundColors[1],
+							hoverBackgroundColor: this.genderDistributionBackgroundColors[1],
+							hoverBorderColor: this.genderDistributionBackgroundColors[1],
 						}
 					]
 				},
 				options: {
 					responsive: true,
+					maintainAspectRatio: false,
 					plugins: {
 						title: {
 							display: true,
 							text: 'Age Group Distribution'
 						},
+						tooltip: {
+							callbacks: {
+								label: (c) => {
+									const value = Number(c.raw);
+									const positiveOnly = value < 0 ? -value : value;
+									let retStr = '';
+									if (c.datasetIndex === 0) {
+										retStr += `Male: ${positiveOnly.toString()}`;
+									} else {
+										retStr += `Female: ${positiveOnly.toString()}`;
+									}
+									return retStr;
+								}
+							}
+						}
 					},
 					indexAxis: 'y',
 					scales: {
 						x: {
 							beginAtZero: true,
+							stacked: false,
 							ticks: {
-								stepSize: 1
+								stepSize: 5,
+								callback: (v) => {
+									return v < 0 ? -v : v;
+								}
 							}
+						},
+						y: {
+							stacked: true
 						}
 					}
-				},
+				}
 			});
 		}
 	}
@@ -247,19 +275,24 @@ export class MainComponent implements OnInit {
 				return Object.values(response.gender)[index] > 0
 			});
 			response.ageGroup.map(ageGroup => {
-				if (!this.ageGroupDistributionLabels.includes(ageGroup.name.slice(1))) {
-					this.ageGroupDistributionLabels.push(ageGroup.name.slice(1));
+				const ageRange = ageGroup.name.slice(1);
+				if (!this.ageGroupDistributionLabels.includes(ageRange)) {
+					this.ageGroupDistributionLabels.push(ageRange);
 					this.ageGroupDistributionDataFemale.push(0);
 					this.ageGroupDistributionDataMale.push(0);
 				}
-				this.ageGroupDistributionLabels.sort();
-				if (ageGroup.name.charAt(0) === 'M') {
-					this.ageGroupDistributionDataMale[this.ageGroupDistributionLabels.indexOf(ageGroup.name.slice(1))] = ageGroup.count;
+			});
+			this.ageGroupDistributionLabels.sort();
+			response.ageGroup.map(ageGroup => {
+				const ageRange = ageGroup.name.slice(1);
+				const genderInitial = ageGroup.name.charAt(0);
+				if (genderInitial === 'M') {
+					this.ageGroupDistributionDataMale[this.ageGroupDistributionLabels.indexOf(ageRange)] = -ageGroup.count;
 				}
-				if (ageGroup.name.charAt(0) === 'F') {
-					this.ageGroupDistributionDataFemale[this.ageGroupDistributionLabels.indexOf(ageGroup.name.slice(1))] = ageGroup.count;
+				if (genderInitial === 'F') {
+					this.ageGroupDistributionDataFemale[this.ageGroupDistributionLabels.indexOf(ageRange)] = ageGroup.count;
 				}
-			})
+			});
 
 			if (this.activeTab === 3) {
 				this.displayStats();
