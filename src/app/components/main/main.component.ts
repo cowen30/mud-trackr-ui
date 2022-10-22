@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { Duration } from 'luxon';
 import { map, Observable, startWith, Subscription } from 'rxjs';
 import { DurationHelper } from 'src/app/helpers/duration.helper';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -23,7 +22,7 @@ const DEFAULT_GENDER_LABELS: string[] = [
 	'Male',
 	'Female',
 	'Other'
-]
+];
 
 const DEFAULT_GENDER_COLORS: string[] = [
 	'rgb(54, 162, 235)',
@@ -135,7 +134,7 @@ export class MainComponent implements OnInit {
 							formatter: (value, ctx) => {
 								let sum = 0;
 								let dataArray = ctx.dataset.data;
-								dataArray.map(data => {
+								dataArray.forEach(data => {
 									if (!isNaN(Number(data))) {
 										sum += Number(data);
 									}
