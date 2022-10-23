@@ -106,14 +106,7 @@
 	<li [ngbNavItem]="3" (shown)="displayStats()">
 		<a ngbNavLink>Stats</a>
 		<ng-template ngbNavContent>
-			<div class="row">
-				<div class="col-12 col-md-6">
-					<canvas #genderDistributionChart></canvas>
-				</div>
-				<div class="col-12 col-md-6">
-					<canvas #ageGroupDistributionChart></canvas>
-				</div>
-			</div>
+			<app-stats #statsComponent [eventDetailId]="selectedEventDetailId"></app-stats>
 		</ng-template>
 	</li>
 </ul>
