@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import Chart, { TooltipItem } from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import { ResultStats } from 'src/app/models/result-stats.model';
 
@@ -81,6 +82,9 @@ export class AgeGroupDistributionComponent implements OnInit {
 						}
 					]
 				},
+				plugins: [
+					ChartDataLabels
+				],
 				options: {
 					responsive: true,
 					maintainAspectRatio: false,
@@ -118,6 +122,21 @@ export class AgeGroupDistributionComponent implements OnInit {
 									return retStr;
 								}
 							}
+						},
+						datalabels: {
+							formatter: (value, _ctx) => {
+								return value < 0 ? -value : value;
+							},
+							anchor: (context) => {
+								return context.datasetIndex === 0 ? 'start' : 'end';
+							},
+							align: (context) => {
+								return context.datasetIndex === 0 ? 'start' : 'end';
+							},
+							color: '#000000',
+							font: {
+								size: 20
+							}
 						}
 					},
 					indexAxis: 'y',
@@ -130,6 +149,10 @@ export class AgeGroupDistributionComponent implements OnInit {
 								callback: (v) => {
 									return v < 0 ? -v : v;
 								}
+							},
+							afterDataLimits(scale) {
+								scale.max += 7;
+								scale.min -= 7;
 							}
 						},
 						y: {
