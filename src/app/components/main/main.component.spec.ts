@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
+
 import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
 
-import { MainComponent } from './main.component';
+import { EventDetailsService } from 'src/app/services/event-details/event-details.service';
 import { EventsService } from 'src/app/services/events/events.service';
 import { ResultsService } from 'src/app/services/results/results.service';
-import { EventDetailsService } from 'src/app/services/event-details/event-details.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MainComponent } from './main.component';
 
 describe('MainComponent', () => {
 	let component: MainComponent;
@@ -22,9 +22,8 @@ describe('MainComponent', () => {
 		mockEventsService = createSpyObj('EventsService', ['getEvents']);
 		mockEventsService.getEvents.and.returnValue(of([]));
 
-		mockResultsService = createSpyObj('ResultsService', ['getResults', 'getStats']);
+		mockResultsService = createSpyObj('ResultsService', ['getResults']);
 		mockResultsService.getResults.and.returnValue(of());
-		mockResultsService.getStats.and.returnValue(of());
 
 		mockEventDetailsService = createSpyObj('EventDetailsService', ['getEventDetailsByEventId']);
 		mockEventDetailsService.getEventDetailsByEventId.and.returnValue(of());
