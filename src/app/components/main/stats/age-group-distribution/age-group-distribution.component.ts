@@ -30,9 +30,10 @@ export class AgeGroupDistributionComponent implements OnInit {
 	private totalMale: number = 0;
 	private totalFemale: number = 0;
 
-	constructor() { }
+	constructor() { /* No implementation required */ }
 
 	ngOnInit(): void {
+		// No implementation required
 	}
 
 	parseAgeGroupStats(ageGroupStats: ResultStats['ageGroup']): void {

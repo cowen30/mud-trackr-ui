@@ -31,9 +31,10 @@ export class GenderDistributionComponent implements OnInit {
 	private genderDistributionData: number[] = [];
 	private genderDistributionBackgroundColors: string[] = [];
 
-	constructor() { }
+	constructor() { /* No implementation required */  }
 
 	ngOnInit(): void {
+		// No implementation required
 	}
 
 	parseGenderStats(genderStats: ResultStats['gender']): void {
