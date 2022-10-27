@@ -30,9 +30,10 @@ export class AgeGroupDistributionComponent implements OnInit {
 	private totalMale: number = 0;
 	private totalFemale: number = 0;
 
-	constructor() { }
+	constructor() { /* No implementation required */ }
 
 	ngOnInit(): void {
+		// No implementation required
 	}
 
 	parseAgeGroupStats(ageGroupStats: ResultStats['ageGroup']): void {
@@ -71,14 +72,20 @@ export class AgeGroupDistributionComponent implements OnInit {
 							data: this.ageGroupDistributionDataMale,
 							backgroundColor: this.genderDistributionBackgroundColors[0],
 							hoverBackgroundColor: this.genderDistributionBackgroundColors[0],
-							hoverBorderColor: this.genderDistributionBackgroundColors[0]
+							hoverBorderColor: this.genderDistributionBackgroundColors[0],
+							datalabels: {
+								color: this.genderDistributionBackgroundColors[0]
+							}
 						},
 						{
 							label: 'Female',
 							data: this.ageGroupDistributionDataFemale,
 							backgroundColor: this.genderDistributionBackgroundColors[1],
 							hoverBackgroundColor: this.genderDistributionBackgroundColors[1],
-							hoverBorderColor: this.genderDistributionBackgroundColors[1]
+							hoverBorderColor: this.genderDistributionBackgroundColors[1],
+							datalabels: {
+								color: this.genderDistributionBackgroundColors[1]
+							}
 						}
 					]
 				},
@@ -135,7 +142,7 @@ export class AgeGroupDistributionComponent implements OnInit {
 							},
 							color: '#000000',
 							font: {
-								size: 20
+								size: 16
 							}
 						}
 					},
@@ -151,8 +158,8 @@ export class AgeGroupDistributionComponent implements OnInit {
 								}
 							},
 							afterDataLimits(scale) {
-								scale.max += 7;
-								scale.min -= 7;
+								scale.max += 5;
+								scale.min -= 5;
 							}
 						},
 						y: {
