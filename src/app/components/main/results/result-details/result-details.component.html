@@ -11,6 +11,7 @@
 						<th scope="col">Lap</th>
 						<th scope="col">Lap Time</th>
 						<th scope="col">Pit Time</th>
+						<th scope="col">Distance</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -18,6 +19,7 @@
 						<td>{{ lap.lapNumber }}</td>
 						<td class="font-monospace">{{ durationHelper.getDurationString(lap.lapTimeSeconds) }}</td>
 						<td class="font-monospace">{{ durationHelper.getDurationString(lap.pitTimeSeconds) }}</td>
+						<td>{{ lap.lapDistance }} {{ lap.distanceUnits }}</td>
 					</tr>
 				</tbody>
 			</table>
