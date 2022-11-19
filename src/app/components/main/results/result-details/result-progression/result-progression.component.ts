@@ -102,6 +102,16 @@ export class ResultProgressionComponent implements OnInit {
 							callback: (value, _index, _ticks) => {
 								return this.durationHelper.getDurationString(Number(value));
 							}
+						},
+						title: {
+							display: true,
+							text: 'Time'
+						}
+					},
+					y: {
+						title: {
+							display: true,
+							text: `Distance${lapDetails[0].distanceUnits != null ? ` (${lapDetails[0].distanceUnits})` : ''}`
 						}
 					}
 				},
