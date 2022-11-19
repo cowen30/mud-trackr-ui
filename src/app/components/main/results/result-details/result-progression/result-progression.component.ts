@@ -99,6 +99,7 @@ export class ResultProgressionComponent implements OnInit {
 						position: 'bottom',
 						max: this.eventFinishSeconds,
 						ticks: {
+							stepSize: this.eventFinishSeconds / 6,
 							callback: (value, _index, _ticks) => {
 								return this.durationHelper.getDurationString(Number(value));
 							}
@@ -109,6 +110,10 @@ export class ResultProgressionComponent implements OnInit {
 						}
 					},
 					y: {
+						beginAtZero: true,
+						ticks: {
+							stepSize: 5
+						},
 						title: {
 							display: true,
 							text: `Distance${lapDetails[0].distanceUnits != null ? ` (${lapDetails[0].distanceUnits})` : ''}`
