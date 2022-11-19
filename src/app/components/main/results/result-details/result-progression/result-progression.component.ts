@@ -52,9 +52,8 @@ export class ResultProgressionComponent implements OnInit {
 		let cumulativeTime = 0;
 		let cumulativeDistance = 0;
 		lapDetails.forEach(lapDetail => {
-			// Accumulate distance
-			// cumulativeDistance += lapDetail.lapDistance;
-			cumulativeDistance += 5; // TODO: Read from API result
+			// Accumulate distance and time
+			cumulativeDistance += lapDetail.lapDistance;
 			cumulativeTime += lapDetail.lapTimeSeconds;
 
 			// Add lap info
