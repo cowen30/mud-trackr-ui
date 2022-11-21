@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { map, Observable, startWith, Subscription } from 'rxjs';
+import { BehaviorSubject, debounceTime, Observable, Subject, Subscription, switchMap, tap, timeout } from 'rxjs';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -15,6 +14,13 @@ import { EventsService } from 'src/app/services/events/events.service';
 import { ResultsService } from 'src/app/services/results/results.service';
 import { ResultDetailsComponent } from './results/result-details/result-details.component';
 import { StatsComponent } from './stats/stats.component';
+
+interface State {
+	page: number;
+	pageSize: number;
+	searchTerm: string;
+	eventDetailId: number;
+}
 
 const FILTER_PAG_REGEX = /\D/g;
 
@@ -32,11 +38,17 @@ export class MainComponent implements OnInit {
 	events!: CustomEvent[];
 	eventDetails!: EventDetail[];
 
-	selectedEventDetailId!: number;
+	private _loading$ = new BehaviorSubject<boolean>(true);
+	private _search$ = new Subject<void>();
+	private _results$ = new BehaviorSubject<Result[]>([]);
+	private _total$ = new BehaviorSubject<number>(0);
 
-	results!: Result[];
-	results$!: Observable<Result[]>;
-	filter = new FormControl('', { nonNullable: true });
+	private _state: State = {
+		page: 1,
+		pageSize: 4,
+		searchTerm: '',
+		eventDetailId: 0
+	};
 
 	constructor(
 		public durationHelper: DurationHelper,
@@ -51,8 +63,50 @@ export class MainComponent implements OnInit {
 		this.getEvents();
 	}
 
-	page = 1;
-	totalResults = 0;
+	get results$() {
+		return this._results$.asObservable();
+	}
+
+	get total$() {
+		return this._total$.asObservable();
+	}
+
+	get loading$() {
+		return this._loading$.asObservable();
+	}
+
+	get page() {
+		return this._state.page;
+	}
+
+	get pageSize() {
+		return this._state.pageSize;
+	}
+
+	get searchTerm() {
+		return this._state.searchTerm;
+	}
+
+	get eventDetailId() {
+		return this._state.eventDetailId;
+	}
+
+	set page(page: number) {
+		this._set({ page });
+	}
+
+	set pageSize(pageSize: number) {
+		this._set({ pageSize });
+	}
+
+	set searchTerm(searchTerm: string) {
+		this._set({ searchTerm });
+	}
+
+	private _set(patch: Partial<State>) {
+		Object.assign(this._state, patch);
+		this._search$.next();
+	}
 
 	selectPage(page: string) {
 		this.page = parseInt(page, 10) || 1;
@@ -71,49 +125,44 @@ export class MainComponent implements OnInit {
 		this.statsComponent.displayCharts();
 	}
 
-	getEvents(): Subscription {
-		const eventsSubscription = this.eventsService.getEvents().subscribe((response: CustomEvent[]) => {
-			this.events = response;
-		});
-
-		setTimeout(() => {
-			eventsSubscription.unsubscribe();
-		}, 5000);
-
-		return eventsSubscription;
+	getEvents(): void {
+		this.eventsService.getEvents()
+			.pipe(timeout({ first: 5000 }))
+			.subscribe((response: CustomEvent[]) => {
+				this.events = response;
+			});
 	}
 
-	getEventDetails(eventId: number): Subscription {
-		const eventDetailsSubscription = this.eventDetailsService.getEventDetailsByEventId(eventId).subscribe((response: EventDetail[]) => {
-			this.eventDetails = response;
-		});
-
-		setTimeout(() => {
-			eventDetailsSubscription.unsubscribe();
-		}, 5000);
-
-		return eventDetailsSubscription;
+	getEventDetails(eventId: number): void {
+		this.eventDetailsService.getEventDetailsByEventId(eventId)
+			.pipe(timeout({ first: 5000 }))
+			.subscribe((response: EventDetail[]) => {
+				this.eventDetails = response;
+			});
 	}
 
-	getResults(eventDetailId: number) {
-		const spinnerName = this.totalResults == 0 ? 'fullSpinner' : 'innerSpinner';
+	getResults() {
+		const spinnerName = 'fullSpinner';
 		this.spinner.show(spinnerName);
-		const resultSubscription = this.resultsService.getResults(eventDetailId, this.page).subscribe((response: ResultResponse) => {
-			this.results = response.results;
-			this.totalResults = response.metadata.total;
-			this.results$ = this.filter.valueChanges.pipe(
-				startWith(''),
-				map(text => this.search(text))
-			);
-			this.spinner.hide(spinnerName);
-			if (this.activeTab === 3) {
-				this.displayStats();
-			}
-		});
 
-		setTimeout(() => {
-			resultSubscription.unsubscribe();
-		}, 5000);
+		this._search$
+			.pipe(
+				tap(() => this._loading$.next(true)),
+				debounceTime(200),
+				switchMap(() => this._search()),
+				tap(() => this._loading$.next(false)),
+			)
+			.subscribe((response: ResultResponse) => {
+				this._results$.next(response.results);
+				this._total$.next(response.metadata.total);
+
+				this.spinner.hide(spinnerName);
+				if (this.activeTab === 3) {
+					this.displayStats();
+				}
+			});
+
+		this._search$.next();
 	}
 
 	eventSelect(eventTrigger: Event) {
@@ -126,21 +175,15 @@ export class MainComponent implements OnInit {
 	eventDetailSelect(eventTrigger: Event) {
 		const selectedEventDetailId: number = parseInt((<HTMLSelectElement> eventTrigger.target).value);
 		if (!Number.isNaN(selectedEventDetailId)) {
-			this.selectedEventDetailId = selectedEventDetailId;
-			this.getResults(selectedEventDetailId);
+			this._state.eventDetailId = selectedEventDetailId;
+			this.getResults();
 		}
 	}
 
-	search(text: string): Result[] {
-		if (this.results == undefined) {
-			return [];
-		}
+	private _search(): Observable<ResultResponse> {
+		const { page, searchTerm, eventDetailId } = this._state;
 
-		return this.results.filter(result => {
-			const term = text.toLowerCase();
-			return result.participant.person.name.toLowerCase().includes(term)
-				|| result.participant.bibNumber.includes(term);
-		});
+		return this.resultsService.searchResults(eventDetailId, searchTerm.toLowerCase(), page);
 	}
 
 }

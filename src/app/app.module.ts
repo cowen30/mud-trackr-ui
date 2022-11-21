@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -31,6 +31,7 @@ import { StatsComponent } from './components/main/stats/stats.component';
 		BrowserAnimationsModule,
 		AppRoutingModule,
 		HttpClientModule,
+		FormsModule,
 		ReactiveFormsModule,
 		NgbModule,
 		NgxSpinnerModule.forRoot({ type: 'ball-pulse-sync' })
