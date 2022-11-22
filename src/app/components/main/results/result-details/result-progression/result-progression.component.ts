@@ -8,13 +8,12 @@ import { LapDetail } from 'src/app/models/lap-detail.model';
 
 @Component({
 	selector: 'app-result-progression',
-	templateUrl: './result-progression.component.html',
-	styleUrls: ['./result-progression.component.scss']
+	templateUrl: './result-progression.component.html'
 })
 export class ResultProgressionComponent implements OnInit {
 
-	@Input() lapDetails: LapDetail[] = [];
-	@Input() eventFinishSeconds: number = 12 * 60 * 60; // TODO: read from API
+	@Input('lapDetails') lapDetails: LapDetail[] = [];
+	private eventFinishSeconds: number = 12 * 60 * 60; // TODO: read from API
 
 	private _resultDetailModalShown = new BehaviorSubject<boolean>(false);
 
@@ -30,7 +29,7 @@ export class ResultProgressionComponent implements OnInit {
 	protected resultProgressionChart!: Chart;
 
 	constructor(
-		public durationHelper: DurationHelper
+		private durationHelper: DurationHelper
 	) { }
 
 	ngOnInit(): void {
@@ -116,7 +115,7 @@ export class ResultProgressionComponent implements OnInit {
 						},
 						title: {
 							display: true,
-							text: `Distance${lapDetails[0].distanceUnits != null ? ` (${lapDetails[0].distanceUnits})` : ''}`
+							text: this.getYAxisTitle(lapDetails[0].distanceUnits)
 						}
 					}
 				},
@@ -133,6 +132,11 @@ export class ResultProgressionComponent implements OnInit {
 				}
 			}
 		});
+	}
+
+	private getYAxisTitle(distanceUnits: string | undefined): string {
+		const units = (distanceUnits != null) ? ` (${distanceUnits})` : '';
+		return `Distance${units}`;
 	}
 
 }
