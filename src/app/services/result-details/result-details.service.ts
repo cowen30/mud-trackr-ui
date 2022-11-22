@@ -14,7 +14,7 @@ export class ResultDetailsService {
 	constructor(private http: HttpClient) { }
 
 	getResultDetails(resultId: number): Observable<LapDetail[]> {
-		return this.http.get<any>(`${this.baseUrl}/results/${resultId}/details`);
+		return this.http.get<LapDetail[]>(`${this.baseUrl}/results/${resultId}/details`);
 	}
 
 }
