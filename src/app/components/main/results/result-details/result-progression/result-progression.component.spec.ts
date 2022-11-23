@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LapDetailBuilder } from 'src/app/builders/lap-detail.builder';
+import LapDetailBuilder from 'src/app/builders/lap-detail.builder';
 import { LapDetail } from 'src/app/models/lap-detail.model';
 
 import { ResultProgressionComponent } from './result-progression.component';

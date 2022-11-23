@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
 
-import ResultBuilder from 'src/app/helpers/builders/result.builder';
+import ResultBuilder from 'src/app/builders/result.builder';
 import { ResultDetailsService } from 'src/app/services/result-details/result-details.service';
 import { ResultDetailsComponent } from './result-details.component';
 
@@ -35,7 +35,7 @@ describe('ResultDetailsComponent', () => {
 
 		fixture = TestBed.createComponent(ResultDetailsComponent);
 		component = fixture.componentInstance;
-		component.result = ResultBuilder.buildResult();
+		component.result = new ResultBuilder().build();
 		fixture.detectChanges();
 	});
 
