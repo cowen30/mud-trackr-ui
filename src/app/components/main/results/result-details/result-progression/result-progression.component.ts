@@ -26,7 +26,7 @@ export class ResultProgressionComponent implements OnInit {
 	}
 
 	@ViewChild('resultProgressionChart') private resultProgressionChartRef!: ElementRef;
-	protected resultProgressionChart!: Chart;
+	resultProgressionChart!: Chart;
 
 	constructor(
 		private durationHelper: DurationHelper
