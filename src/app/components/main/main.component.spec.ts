@@ -15,6 +15,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { EventBuilder } from 'src/app/builders/event.builder';
 import { By } from '@angular/platform-browser';
 import EventDetailBuilder from 'src/app/builders/event-detail.builder';
+import { EventDetail } from 'src/app/models/event-detail.model';
+import { Event } from 'src/app/models/event.model';
 
 describe('MainComponent', () => {
 	let component: MainComponent;
@@ -35,16 +37,24 @@ describe('MainComponent', () => {
 		]
 	};
 
+	const eventsStub: Event[] = [
+		new EventBuilder().build()
+	];
+
+	const eventDetailsStub: EventDetail[] = [
+		new EventDetailBuilder().build()
+	];
+
 	beforeEach(async () => {
 		mockEventsService = createSpyObj('EventsService', ['getEvents']);
-		mockEventsService.getEvents.and.returnValue(of([]));
+		mockEventsService.getEvents.and.returnValue(of(eventsStub));
 
 		mockResultsService = createSpyObj('ResultsService', ['getResults', 'searchResults']);
 		mockResultsService.getResults.and.returnValue(of());
 		mockResultsService.searchResults.and.returnValue(of(dummyResults));
 
 		mockEventDetailsService = createSpyObj('EventDetailsService', ['getEventDetailsByEventId']);
-		mockEventDetailsService.getEventDetailsByEventId.and.returnValue(of());
+		mockEventDetailsService.getEventDetailsByEventId.and.returnValue(of(eventDetailsStub));
 
 		await TestBed.configureTestingModule({
 			declarations: [
@@ -75,11 +85,15 @@ describe('MainComponent', () => {
 
 		fixture = TestBed.createComponent(MainComponent);
 		component = fixture.componentInstance;
-		fixture.detectChanges();
 	});
 
 	it('should create', () => {
+		spyOn(component, 'getEvents');
+
+		fixture.detectChanges();
+
 		expect(component).toBeTruthy();
+		expect(component.getEvents).toHaveBeenCalled();
 	});
 
 	it('should get event details when event selected', () => {
@@ -115,6 +129,16 @@ describe('MainComponent', () => {
 		fixture.detectChanges();
 
 		expect(component.getResults).toHaveBeenCalled();
+	});
+
+	it('should set list of events', () => {
+		component.getEvents();
+		expect(component.events).toEqual(eventsStub);
+	});
+
+	it('should set list of event details', () => {
+		component.getEventDetails(1);
+		expect(component.eventDetails).toEqual(eventDetailsStub);
 	});
 
 });
