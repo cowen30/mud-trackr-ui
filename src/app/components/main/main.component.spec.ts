@@ -141,4 +141,19 @@ describe('MainComponent', () => {
 		expect(component.eventDetails).toEqual(eventDetailsStub);
 	});
 
+	it('should update state when page updated', () => {
+		component.page = 2;
+		expect(component.page).toBe(2);
+	});
+
+	it('should update state when pageSize updated', () => {
+		component.pageSize = 50;
+		expect(component.pageSize).toBe(50);
+	});
+
+	it('should update state when searchTerm updated', () => {
+		component.searchTerm = 'test';
+		expect(component.searchTerm).toBe('test');
+	});
+
 });
