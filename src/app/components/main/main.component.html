@@ -24,7 +24,7 @@
 				<div class="mb-3 row">
 					<label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Search:</label>
 					<div class="col-xs-3 col-sm-auto">
-						<input id="table-filtering-search" class="form-control" type="text" [formControl]="filter">
+						<input id="table-filtering-search" class="form-control" type="text" name="searchTerm" [(ngModel)]="searchTerm">
 					</div>
 				</div>
 			</form>
@@ -66,7 +66,7 @@
 				<ngx-spinner name="innerSpinner" [fullScreen]="false"></ngx-spinner>
 			</div>
 			<div class="d-flex justify-content-center pt-3">
-				<ngb-pagination [collectionSize]="totalResults" [pageSize]="25" [(page)]="page" [boundaryLinks]="true" (pageChange)="getResults(selectedEventDetailId)">
+				<ngb-pagination [collectionSize]="(total$ | async)!" [pageSize]="25" [(page)]="page" [boundaryLinks]="true">
 					<ng-template ngbPaginationPages let-page let-pages="pages">
 						<li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
 							<div class="mb-3 d-flex flex-nowrap px-2">
@@ -100,13 +100,13 @@
 	<li [ngbNavItem]="2">
 		<a ngbNavLink>Participants</a>
 		<ng-template ngbNavContent>
-			<app-participants #participantsComponent [eventDetailId]="selectedEventDetailId"></app-participants>
+			<app-participants #participantsComponent [eventDetailId]="eventDetailId"></app-participants>
 		</ng-template>
 	</li>
 	<li [ngbNavItem]="3" (shown)="displayStats()">
 		<a ngbNavLink>Stats</a>
 		<ng-template ngbNavContent>
-			<app-stats #statsComponent [eventDetailId]="selectedEventDetailId"></app-stats>
+			<app-stats #statsComponent [eventDetailId]="eventDetailId"></app-stats>
 		</ng-template>
 	</li>
 </ul>

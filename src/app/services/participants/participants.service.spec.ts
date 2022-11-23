@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import ParticipantBuilder from 'src/app/helpers/builders/participant.builder';
+import ParticipantBuilder from 'src/app/builders/participant.builder';
 import { ParticipantResponse } from 'src/app/models/participant-response.model';
 import { ParticipantsService } from './participants.service';
 
@@ -36,7 +36,7 @@ describe('ParticipantsService', () => {
 				currentPage: 1
 			},
 			participants: [
-				ParticipantBuilder.buildParticipant()
+				new ParticipantBuilder().build()
 			]
 		};
 
@@ -44,7 +44,7 @@ describe('ParticipantsService', () => {
 			expect(participantResponse.participants.length).toBe(1);
 			expect(participantResponse).toEqual(dummyParticipants);
 		});
-		const req = httpMock.expectOne(`http://localhost:3000/participants?eventDetailId=1&page=1`);
+		const req = httpMock.expectOne('http://localhost:3000/participants?eventDetailId=1&page=1');
 
 		expect(req.request.method).toBe('GET');
 		req.flush(dummyParticipants);
