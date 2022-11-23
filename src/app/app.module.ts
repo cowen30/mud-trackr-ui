@@ -15,6 +15,7 @@ import { ResultDetailsComponent } from './components/main/results/result-details
 import { AgeGroupDistributionComponent } from './components/main/stats/age-group-distribution/age-group-distribution.component';
 import { GenderDistributionComponent } from './components/main/stats/gender-distribution/gender-distribution.component';
 import { StatsComponent } from './components/main/stats/stats.component';
+import { ResultProgressionComponent } from './components/main/results/result-details/result-progression/result-progression.component';
 
 @NgModule({
 	declarations: [
@@ -24,7 +25,8 @@ import { StatsComponent } from './components/main/stats/stats.component';
 		ResultDetailsComponent,
 		StatsComponent,
 		GenderDistributionComponent,
-		AgeGroupDistributionComponent
+		AgeGroupDistributionComponent,
+		ResultProgressionComponent
 	],
 	imports: [
 		BrowserModule,

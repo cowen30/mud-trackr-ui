@@ -1,27 +1,34 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { of } from 'rxjs';
 
 import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
 
-import { ResultDetailsComponent } from './result-details.component';
 import ResultBuilder from 'src/app/helpers/builders/result.builder';
+import { ResultDetailsService } from 'src/app/services/result-details/result-details.service';
+import { ResultDetailsComponent } from './result-details.component';
 
 describe('ResultDetailsComponent', () => {
 	let component: ResultDetailsComponent;
 	let fixture: ComponentFixture<ResultDetailsComponent>;
 
-	// let mockActiveModal: SpyObj<NgbActiveModal>;
+	let mockResultDetailsService: SpyObj<ResultDetailsService>;
 
 	beforeEach(async () => {
-		// mockActiveModal = createSpyObj('NgbActiveModal', ['dismiss', 'close']);
+		mockResultDetailsService = createSpyObj('ResultDetailsService', ['getResultDetails']);
+		mockResultDetailsService.getResultDetails.and.returnValue(of());
 
 		await TestBed.configureTestingModule({
 			declarations: [
 				ResultDetailsComponent
 			],
 			providers: [
-				NgbActiveModal
+				NgbActiveModal,
+				{
+					provide: ResultDetailsService,
+					useValue: mockResultDetailsService
+				}
 			]
 		})
 		.compileComponents();
