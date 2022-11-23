@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, debounceTime, Observable, Subject, Subscription, switchMap, tap, timeout } from 'rxjs';
+import { BehaviorSubject, debounceTime, Observable, Subject, switchMap, tap, timeout } from 'rxjs';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 
