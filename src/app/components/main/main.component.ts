@@ -119,6 +119,9 @@ export class MainComponent implements OnInit {
 	openModal(result: Result) {
 		const modalRef = this.modalService.open(ResultDetailsComponent, { size: 'lg' });
 		modalRef.componentInstance.result = result;
+		modalRef.shown.subscribe(() => {
+			modalRef.componentInstance.resultDetailModalShown = true;
+		});
 	}
 
 	displayStats() {

@@ -3,22 +3,33 @@
 	<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 <div class="modal-body">
-	<table class="table table-sm table-striped small">
-		<thead>
-			<tr>
-				<th scope="col">Lap</th>
-				<th scope="col">Lap Time</th>
-				<th scope="col">Pit Time</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let lap of result.lapDetails">
-				<td>{{ lap.lapNumber }}</td>
-				<td class="font-monospace">{{ durationHelper.getDurationString(lap.lapTimeSeconds) }}</td>
-				<td class="font-monospace">{{ durationHelper.getDurationString(lap.pitTimeSeconds) }}</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="row">
+		<div class="col-12">
+			<table class="table table-sm table-striped small">
+				<thead>
+					<tr>
+						<th scope="col">Lap</th>
+						<th scope="col">Lap Time</th>
+						<th scope="col">Pit Time</th>
+						<th scope="col">Distance</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let lap of result.lapDetails">
+						<td>{{ lap.lapNumber }}</td>
+						<td class="font-monospace">{{ durationHelper.getDurationString(lap.lapTimeSeconds) }}</td>
+						<td class="font-monospace">{{ durationHelper.getDurationString(lap.pitTimeSeconds) }}</td>
+						<td>{{ lap.lapDistance }} {{ lap.distanceUnits }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<app-result-progression [lapDetails]="result.lapDetails" [resultDetailModalShown]="resultDetailModalShown"></app-result-progression>
+		</div>
+	</div>
 </div>
 <div class="modal-footer">
 	<button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
