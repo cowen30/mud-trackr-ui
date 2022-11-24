@@ -1,22 +1,23 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
 import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import EventDetailBuilder from 'src/app/builders/event-detail.builder';
+import { EventBuilder } from 'src/app/builders/event.builder';
+import ResultBuilder from 'src/app/builders/result.builder';
+import { EventDetail } from 'src/app/models/event-detail.model';
+import { Event } from 'src/app/models/event.model';
+import { ResultResponse } from 'src/app/models/result-response';
 import { EventDetailsService } from 'src/app/services/event-details/event-details.service';
 import { EventsService } from 'src/app/services/events/events.service';
 import { ResultsService } from 'src/app/services/results/results.service';
 import { MainComponent } from './main.component';
-import { ResultResponse } from 'src/app/models/result-response';
-import ResultBuilder from 'src/app/builders/result.builder';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { EventBuilder } from 'src/app/builders/event.builder';
-import { By } from '@angular/platform-browser';
-import EventDetailBuilder from 'src/app/builders/event-detail.builder';
-import { EventDetail } from 'src/app/models/event-detail.model';
-import { Event } from 'src/app/models/event.model';
 
 describe('MainComponent', () => {
 	let component: MainComponent;
