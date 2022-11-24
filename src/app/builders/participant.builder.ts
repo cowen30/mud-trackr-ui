@@ -1,8 +1,8 @@
 import { Participant } from '../models/participant.model';
 import { Person } from '../models/person.model';
-import PersonBuilder from './person.builder';
+import { PersonBuilder } from './person.builder';
 
-export default class ParticipantBuilder {
+export class ParticipantBuilder {
 
 	private id: number = 1;
 	private person: Person = new PersonBuilder().build();

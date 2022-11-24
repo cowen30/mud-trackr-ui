@@ -2,9 +2,9 @@ import { ResultStatus } from 'src/app/enums/result-status.enum';
 import { LapDetail } from '../models/lap-detail.model';
 import { Participant } from '../models/participant.model';
 import { Result } from '../models/result.model';
-import ParticipantBuilder from './participant.builder';
+import { ParticipantBuilder } from './participant.builder';
 
-export default class ResultBuilder {
+export class ResultBuilder {
 
 	private id: number = 1;
 	private placeOverall: number = 1;

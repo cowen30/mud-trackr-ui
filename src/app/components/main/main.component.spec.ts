@@ -8,9 +8,9 @@ import SpyObj = jasmine.SpyObj;
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import EventDetailBuilder from 'src/app/builders/event-detail.builder';
+import { EventDetailBuilder } from 'src/app/builders/event-detail.builder';
 import { EventBuilder } from 'src/app/builders/event.builder';
-import ResultBuilder from 'src/app/builders/result.builder';
+import { ResultBuilder } from 'src/app/builders/result.builder';
 import { EventDetail } from 'src/app/models/event-detail.model';
 import { Event } from 'src/app/models/event.model';
 import { ResultResponse } from 'src/app/models/result-response';

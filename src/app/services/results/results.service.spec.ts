@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import ResultBuilder from 'src/app/builders/result.builder';
+import { ResultBuilder } from 'src/app/builders/result.builder';
 import { ResultResponse } from 'src/app/models/result-response';
 import { ResultStats } from 'src/app/models/result-stats.model';
 import { ResultsService } from './results.service';

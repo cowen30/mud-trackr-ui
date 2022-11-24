@@ -1,6 +1,6 @@
 import { LapDetail } from '../models/lap-detail.model';
 
-export default class LapDetailBuilder {
+export class LapDetailBuilder {
 
 	private id: number = 1;
 	private lapNumber: number = 1;

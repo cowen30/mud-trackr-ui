@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { EventDetail } from 'src/app/models/event-detail.model';
 
+import { EventDetail } from 'src/app/models/event-detail.model';
 import { EventDetailsService } from './event-details.service';
 
 describe('EventDetailsService', () => {

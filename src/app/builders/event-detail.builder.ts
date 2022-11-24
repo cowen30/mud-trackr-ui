@@ -4,7 +4,7 @@ import { Event } from '../models/event.model';
 import { EventTypeBuilder } from './event-type.builder';
 import { EventBuilder } from './event.builder';
 
-export default class EventDetailBuilder {
+export class EventDetailBuilder {
 
 	private id: number = 1;
 	private event: Event = new EventBuilder().build();

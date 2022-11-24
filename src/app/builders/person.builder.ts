@@ -1,6 +1,6 @@
 import { Person } from '../models/person.model';
 
-export default class PersonBuilder {
+export class PersonBuilder {
 
 	private id: number = 1;
 	private name: string = 'test';

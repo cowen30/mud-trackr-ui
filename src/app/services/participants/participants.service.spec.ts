@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import ParticipantBuilder from 'src/app/builders/participant.builder';
+import { ParticipantBuilder } from 'src/app/builders/participant.builder';
 import { ParticipantResponse } from 'src/app/models/participant-response.model';
 import { ParticipantsService } from './participants.service';
 
