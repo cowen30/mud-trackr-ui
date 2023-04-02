@@ -1,5 +1,35 @@
 <div class="container-fluid">
-	<h1 id="title">MudTrackr</h1>
+	<nav class="navbar">
+		<div class="container-fluid">
+			<span class="navbar-brand">MudTrackr</span>
+
+			<div class="navbar-nav ms-auto">
+				<div class="nav-item" ngbDropdown display="dynamic" placement="bottom-end">
+					<a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button">
+						<svg class="bi my-1 theme-icon-active"><use href="bootstrap-icons.svg#circle-half"></use></svg>
+					</a>
+
+					<div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu" aria-labelledby="bd-theme">
+						<button ngbDropdownItem type="button" class="d-flex align-items-center" data-bs-theme-value="light">
+							<svg class="bi me-2 opacity-50 theme-icon"><use href="bootstrap-icons.svg#sun-fill"></use></svg>
+								Light
+							<svg class="bi ms-auto d-none theme-check"><use href="bootstrap-icons.svg#check2"></use></svg>
+						</button>
+						<button ngbDropdownItem type="button" class="d-flex align-items-center" data-bs-theme-value="dark">
+							<svg class="bi me-2 opacity-50 theme-icon"><use href="bootstrap-icons.svg#moon-stars-fill"></use></svg>
+								Dark
+							<svg class="bi ms-auto d-none theme-check"><use href="bootstrap-icons.svg#check2"></use></svg>
+						</button>
+						<button ngbDropdownItem type="button" class="d-flex align-items-center" data-bs-theme-value="auto">
+							<svg class="bi me-2 opacity-50 theme-icon"><use href="bootstrap-icons.svg#circle-half"></use></svg>
+								Auto
+							<svg class="bi ms-auto d-none theme-check"><use href="bootstrap-icons.svg#check2"></use></svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
 
 	<app-main></app-main>
 </div>
