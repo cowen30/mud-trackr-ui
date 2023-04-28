@@ -36,9 +36,7 @@
 							"node_modules/ngx-spinner/animations/ball-pulse-sync.css",
 							"src/styles.scss"
 						],
-						"scripts": [
-							"src/colors.js"
-						]
+						"scripts": []
 					},
 					"configurations": {
 						"production": {

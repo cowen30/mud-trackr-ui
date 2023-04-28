@@ -6,24 +6,14 @@
 			<div class="navbar-nav ms-auto">
 				<div class="nav-item" ngbDropdown display="dynamic" placement="bottom-end">
 					<a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button">
-						<svg class="bi my-1 theme-icon-active"><use href="bootstrap-icons.svg#circle-half"></use></svg>
+						<svg class="bi my-1 theme-icon-active"><use [attr.href]="'bootstrap-icons.svg#' + selectedThemeIcon"></use></svg>
 					</a>
 
 					<div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu" aria-labelledby="bd-theme">
-						<button ngbDropdownItem type="button" class="d-flex align-items-center" data-bs-theme-value="light">
-							<svg class="bi me-2 opacity-50 theme-icon"><use href="bootstrap-icons.svg#sun-fill"></use></svg>
-								Light
-							<svg class="bi ms-auto d-none theme-check"><use href="bootstrap-icons.svg#check2"></use></svg>
-						</button>
-						<button ngbDropdownItem type="button" class="d-flex align-items-center" data-bs-theme-value="dark">
-							<svg class="bi me-2 opacity-50 theme-icon"><use href="bootstrap-icons.svg#moon-stars-fill"></use></svg>
-								Dark
-							<svg class="bi ms-auto d-none theme-check"><use href="bootstrap-icons.svg#check2"></use></svg>
-						</button>
-						<button ngbDropdownItem type="button" class="d-flex align-items-center" data-bs-theme-value="auto">
-							<svg class="bi me-2 opacity-50 theme-icon"><use href="bootstrap-icons.svg#circle-half"></use></svg>
-								Auto
-							<svg class="bi ms-auto d-none theme-check"><use href="bootstrap-icons.svg#check2"></use></svg>
+						<button *ngFor="let theme of availableThemes" ngbDropdownItem type="button" class="d-flex align-items-center" [ngClass]="{ active: selectedTheme == theme.id}" (click)="changeTheme(theme.id)">
+							<svg class="bi me-2 opacity-50 theme-icon"><use [attr.href]="'bootstrap-icons.svg#' + theme.icon"></use></svg>
+								{{ theme.name }}
+							<svg class="bi ms-auto theme-check" [ngClass]="{ 'd-none': selectedTheme != theme.id }"><use href="bootstrap-icons.svg#check2"></use></svg>
 						</button>
 					</div>
 				</div>
