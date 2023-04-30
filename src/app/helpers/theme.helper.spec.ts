@@ -43,9 +43,9 @@ describe('ThemeHelper', () => {
 			onchange: () => {},
 			dispatchEvent: () => false,
 			addListener: () => {},
-        	removeListener: () => {},
+			removeListener: () => {},
 			addEventListener: () => {},
-        	removeEventListener: () => {}
+			removeEventListener: () => {}
 		});
 
 		let result = themeHelper.getPreferredTheme();
