@@ -1,5 +1,4 @@
-import { DOCUMENT } from "@angular/common";
-import { Inject, Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable({
 	providedIn: 'root'
