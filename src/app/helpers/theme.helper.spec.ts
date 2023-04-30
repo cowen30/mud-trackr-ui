@@ -53,4 +53,27 @@ describe('ThemeHelper', () => {
 		expect(result).toEqual('dark');
 	});
 
+	it('should set theme on document element', () => {
+		themeHelper.setTheme('theme');
+		let result = document.documentElement.getAttribute('data-bs-theme');
+		expect(result).toEqual('theme');
+	});
+
+	it('should set dark theme on document element if system settings prefers', () => {
+		spyOn(window, 'matchMedia').and.returnValue({
+			matches: true,
+			media: '',
+			onchange: () => {},
+			dispatchEvent: () => false,
+			addListener: () => {},
+			removeListener: () => {},
+			addEventListener: () => {},
+			removeEventListener: () => {}
+		});
+
+		themeHelper.setTheme('auto');
+		let result = document.documentElement.getAttribute('data-bs-theme');
+		expect(result).toEqual('dark');
+	});
+
 });
