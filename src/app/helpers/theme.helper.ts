@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ThemeHelper {
 
-	private storedTheme = localStorage.getItem('theme');
+	storedTheme = localStorage.getItem('theme');
 
 	initializeListener(): string {
 		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
