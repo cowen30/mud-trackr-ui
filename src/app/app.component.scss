@@ -1,0 +1,19 @@
+.bi {
+	width: 1.25em;
+	height: 1.25em;
+	fill: currentColor;
+}
+
+.dropdown-menu {
+	padding: 0.5rem;
+}
+
+.dropdown-item {
+	margin-top: 0.125rem;
+	border-radius: 0.375rem;
+}
+
+.dropdown-toggle::after {
+	margin-left: 0.455em;
+    vertical-align: 0.1em;
+}
