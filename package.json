@@ -9,6 +9,10 @@
     "test": "ng test --no-watch --no-progress --browsers=ChromeHeadless --code-coverage"
   },
   "private": true,
+	"engines" : {
+    "npm" : "^9.3.1",
+    "node" : "^18.14.0"
+  },
   "dependencies": {
     "@angular/animations": "~15.2.2",
     "@angular/common": "~15.2.2",
