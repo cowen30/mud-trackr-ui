@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+// Default variable overrides
+$dropdown-link-active-bg: #ff6600;
+
 /* Importing Bootstrap SCSS file. */
-@use 'bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/bootstrap';
