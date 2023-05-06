@@ -32,4 +32,13 @@ describe('AppComponent', () => {
 		const compiled = fixture.nativeElement as HTMLElement;
 		expect(compiled.querySelector('#title')?.textContent).toContain('MudTrackr');
 	});
+
+	it('should change color theme', () => {
+		const fixture = TestBed.createComponent(AppComponent);
+		const app = fixture.componentInstance;
+		app.changeTheme('light');
+		expect(app.selectedTheme).toEqual('light');
+		expect(app.selectedThemeIcon).toEqual('sun-fill');
+	});
+
 });
