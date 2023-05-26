@@ -1,6 +1,6 @@
 {
 	"sonarlint.connectedMode.project": {
-		"connectionId": "cowen30-connection",
+		"connectionId": "cowen30",
 		"projectKey": "cowen30_mud-trackr-ui2"
 	}
 }
