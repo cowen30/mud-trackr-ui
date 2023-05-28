@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemeHelper } from './helpers/theme.helper';
+import { GoogleAnalyticsService } from './services/google-analytics/google-analytics.service';
 
 @Component({
 	selector: 'app-root',
@@ -31,12 +32,14 @@ export class AppComponent implements OnInit {
 	]
 
 	constructor(
-		private themeHelper: ThemeHelper
+		private themeHelper: ThemeHelper,
+		private googleAnalyticsService: GoogleAnalyticsService
 	) { }
 
 	ngOnInit(): void {
 		this.selectedTheme = this.themeHelper.initializeListener();
 		this.selectedThemeIcon = this.availableThemes.find(t => t.id === this.selectedTheme)?.icon;
+		this.googleAnalyticsService.init();
 	}
 
 	changeTheme(theme: string) {

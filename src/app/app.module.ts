@@ -16,6 +16,7 @@ import { AgeGroupDistributionComponent } from './components/main/stats/age-group
 import { GenderDistributionComponent } from './components/main/stats/gender-distribution/gender-distribution.component';
 import { StatsComponent } from './components/main/stats/stats.component';
 import { ResultProgressionComponent } from './components/main/results/result-details/result-progression/result-progression.component';
+import { GoogleAnalyticsService } from './services/google-analytics/google-analytics.service';
 
 @NgModule({
 	declarations: [
@@ -38,7 +39,9 @@ import { ResultProgressionComponent } from './components/main/results/result-det
 		NgbModule,
 		NgxSpinnerModule.forRoot({ type: 'ball-pulse-sync' })
 	],
-	providers: [],
+	providers: [
+		GoogleAnalyticsService
+	],
 	bootstrap: [AppComponent],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
