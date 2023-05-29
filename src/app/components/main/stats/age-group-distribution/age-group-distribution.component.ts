@@ -13,8 +13,7 @@ const DEFAULT_GENDER_COLORS: string[] = [
 
 @Component({
 	selector: 'app-age-group-distribution',
-	templateUrl: './age-group-distribution.component.html',
-	styleUrls: ['./age-group-distribution.component.scss']
+	templateUrl: './age-group-distribution.component.html'
 })
 export class AgeGroupDistributionComponent implements OnInit {
 

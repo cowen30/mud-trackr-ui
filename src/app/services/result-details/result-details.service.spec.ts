@@ -8,12 +8,13 @@ describe('ResultDetailsService', () => {
 	let resultDetailsService: ResultDetailsService;
 	let httpMock: HttpTestingController;
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
 			imports: [
 				HttpClientTestingModule
 			]
-		});
+		}).compileComponents();
+
 		resultDetailsService = TestBed.inject(ResultDetailsService);
 		httpMock = TestBed.inject(HttpTestingController);
 	});

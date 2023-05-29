@@ -10,8 +10,7 @@ const FILTER_PAG_REGEX = /\D/g;
 
 @Component({
 	selector: 'app-participants',
-	templateUrl: './participants.component.html',
-	styleUrls: ['./participants.component.scss']
+	templateUrl: './participants.component.html'
 })
 export class ParticipantsComponent implements OnInit {
 

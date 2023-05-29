@@ -98,6 +98,9 @@
 						"production": {
 							"browserTarget": "mud-trackr-ui:build:production"
 						},
+						"test": {
+							"browserTarget": "mud-trackr-ui:build:test"
+						},
 						"development": {
 							"browserTarget": "mud-trackr-ui:build:development"
 						}
