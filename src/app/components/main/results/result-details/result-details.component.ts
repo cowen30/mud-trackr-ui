@@ -8,8 +8,7 @@ import { ResultDetailsService } from 'src/app/services/result-details/result-det
 
 @Component({
 	selector: 'app-result-details',
-	templateUrl: './result-details.component.html',
-	styleUrls: ['./result-details.component.scss']
+	templateUrl: './result-details.component.html'
 })
 export class ResultDetailsComponent implements OnInit {
 

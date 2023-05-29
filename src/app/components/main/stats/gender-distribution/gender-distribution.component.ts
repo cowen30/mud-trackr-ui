@@ -19,8 +19,7 @@ const DEFAULT_GENDER_COLORS: string[] = [
 
 @Component({
 	selector: 'app-gender-distribution',
-	templateUrl: './gender-distribution.component.html',
-	styleUrls: ['./gender-distribution.component.scss']
+	templateUrl: './gender-distribution.component.html'
 })
 export class GenderDistributionComponent implements OnInit {
 

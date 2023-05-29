@@ -1,5 +1,5 @@
 export enum ResultStatus {
-	'DNF',
-	'DNS',
+	'DNF' = 'DNF',
+	'DNS' = 'DNS',
 	'FINISHED' = 'Finished'
 }
