@@ -17,6 +17,7 @@ import { GenderDistributionComponent } from './components/main/stats/gender-dist
 import { StatsComponent } from './components/main/stats/stats.component';
 import { ResultProgressionComponent } from './components/main/results/result-details/result-progression/result-progression.component';
 import { GoogleAnalyticsService } from './services/google-analytics/google-analytics.service';
+import { EnvironmentService } from './services/environment/environment.service';
 
 @NgModule({
 	declarations: [
@@ -40,7 +41,8 @@ import { GoogleAnalyticsService } from './services/google-analytics/google-analy
 		NgxSpinnerModule.forRoot({ type: 'ball-pulse-sync' })
 	],
 	providers: [
-		GoogleAnalyticsService
+		GoogleAnalyticsService,
+		EnvironmentService
 	],
 	bootstrap: [AppComponent],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA]
