@@ -19,7 +19,7 @@ describe('GoogleAnalyticsService', () => {
 			events: routerEventReplaySubject.asObservable()
 		};
 		environmentServiceSpy = jasmine.createSpyObj('EnvironmentService', [], { googleAnalyticsMeasurementId: '1234567890' });
-		TestBed.configureTestingModule({
+		await TestBed.configureTestingModule({
 			providers: [
 				{ provide: Router, useValue: routerMock },
 				{ provide: EnvironmentService, useValue: environmentServiceSpy }
