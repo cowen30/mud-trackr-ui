@@ -9,7 +9,7 @@ describe('EventsService', () => {
 	let httpMock: HttpTestingController;
 
 	beforeEach(async () => {
-		TestBed.configureTestingModule({
+		await TestBed.configureTestingModule({
 			imports: [
 				HttpClientTestingModule,
 			]
